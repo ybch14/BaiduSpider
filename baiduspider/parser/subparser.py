@@ -134,17 +134,20 @@ class WebSubParser(BaseSpider):
                         .strip("(")
                     )
                     b_cover_type = "video"
-                except (TypeError):
+                except (TypeError, AttributeError):
                     b_cover = None
                     b_cover_type = None
                     
         # 如果百科的tpl==sg_kg_entity_san
         elif baike["tpl"] == "sg_kg_entity_san":
-            b_des = self._format(
-                baike.find("div", class_="description_1rAFH")
-                .find("p", class_="cu-font-normal")
-                .text
-            )
+            try:
+                b_des = self._format(
+                    baike.find("div", class_="description_1rAFH")
+                    .find("p", class_="cu-font-normal")
+                    .text
+                )
+            except (TypeError, AttributeError):
+                b_des = None
             try:
                 b_cover = baike.find("div", class_="_image_1gdgv_1").find("img")["src"]
                 # 如果能找到class==cos-icon的i标签，则说明是视频，否则是图片

@@ -193,6 +193,8 @@ class Parser(BaseSpider):
                         _.find("span", class_="c-color-gray2")
                         .text
                     )
+                else:
+                    time = None
             except (AttributeError, IndexError):
                 time = None
             try:
